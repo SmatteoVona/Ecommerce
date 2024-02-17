@@ -26,6 +26,7 @@ ID INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(255) NOT NULL , 
 descrizione VARCHAR(1000),
 prezzo FLOAT NOT NULL ,
+percorso_immagine VARCHAR(255),
 ID_categoria INT,
 FOREIGN KEY (ID_categoria) REFERENCES categoria(ID));
 
@@ -80,18 +81,19 @@ INSERT INTO categoria (nome, descrizione) VALUES
 
 -- Inserimento dati nella tabella prodotto
 -- Nota: Gli inserimenti per 'Divano angolare' e 'Letto matrimoniale' sono già presenti, quindi li ometto
-INSERT INTO prodotto (nome, descrizione, prezzo, ID_categoria) VALUES
-('Tavolino da caffè', 'Tavolino in legno massello con ripiano in vetro', 199.99, (SELECT ID FROM categoria WHERE nome='Soggiorno')),
-('Divano angolare', 'Divano angolare in tessuto grigio, 5 posti', 899.99, (SELECT ID FROM categoria WHERE nome='Soggiorno')),
-('Poltrona piegevole', 'Morbida poltrona reclinabile', 299.99, (SELECT ID FROM categoria WHERE nome='Terrazza')),
-('Lampada da terra', 'Lampada da terra moderna in metallo nero', 89.99, (SELECT ID FROM categoria WHERE nome='Soggiorno')),
-('Armadio a due ante', 'Armadio spazioso in legno chiaro', 599.99, (SELECT ID FROM categoria WHERE nome='Camera')),
-('Comodino in legno', 'Comodino in legno con due cassetti', 129.99, (SELECT ID FROM categoria WHERE nome='Camera')),
-('Specchiera da ingresso', 'Specchiera con cornice in legno e mensola', 79.99, (SELECT ID FROM categoria WHERE nome='Ingresso')),
-('Appendiabiti da parete', 'Appendiabiti in metallo con design moderno', 49.99, (SELECT ID FROM categoria WHERE nome='Ingresso')),
-('Letto matrimoniale', 'Letto matrimoniale con contenitore, in legno', 499.99, (SELECT ID FROM categoria WHERE nome='Camera')),
-('Set di sedie da giardino', 'Set di 4 sedie in metallo pieghevoli', 149.99, (SELECT ID FROM categoria WHERE nome='Terrazza')),
-('Ombrellone da giardino', 'Ombrellone grande resistente ai raggi UV', 99.99, (SELECT ID FROM categoria WHERE nome='Terrazza'));
+INSERT INTO prodotto (nome, descrizione, prezzo, ID_categoria, percorso_immagine) VALUES
+('Tavolino da caffè', 'Tavolino in legno massello con ripiano in vetro', 199.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/tavolino.jpg'),
+('Divano angolare', 'Divano angolare in tessuto grigio, 5 posti', 899.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/divano1.jpg'),
+('Poltrona piegevole', 'Morbida poltrona reclinabile', 299.99, (SELECT ID FROM categoria WHERE nome='Terrazza'), 'immagini/poltrona.jpg'),
+('Lampada da terra', 'Lampada da terra moderna in metallo nero', 89.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/lampada.jpg'),
+('Armadio a due ante', 'Armadio spazioso in legno chiaro', 599.99, (SELECT ID FROM categoria WHERE nome='Camera'), 'immagini/armadio.jpg'),
+('Comodino in legno', 'Comodino in legno con due cassetti', 129.99, (SELECT ID FROM categoria WHERE nome='Camera'), 'immagini/comodino.jpg'),
+('Specchiera da ingresso', 'Specchiera con cornice in legno e mensola', 79.99, (SELECT ID FROM categoria WHERE nome='Ingresso'), 'immagini/specchiera.jpg'),
+('Appendiabiti da parete', 'Appendiabiti in metallo con design moderno', 49.99, (SELECT ID FROM categoria WHERE nome='Ingresso'), 'immagini/appendiabiti.jpg'),
+('Letto matrimoniale', 'Letto matrimoniale con contenitore, in legno', 499.99, (SELECT ID FROM categoria WHERE nome='Camera'), 'immagini/letto.jpg'),
+('Set di sedie da giardino', 'Set di 4 sedie in metallo pieghevoli', 149.99, (SELECT ID FROM categoria WHERE nome='Terrazza'), 'immagini/sedie.jpg'),
+('Ombrellone da giardino', 'Ombrellone grande resistente ai raggi UV', 99.99, (SELECT ID FROM categoria WHERE nome='Terrazza'), 'immagini/ombrellone.jpg');
+
 
 -- Nota: Assicurati che i nomi delle categorie corrispondano esattamente a quelli inseriti nella tabella categoria.
 

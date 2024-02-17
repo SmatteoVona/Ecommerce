@@ -57,40 +57,52 @@
   <div class="py-5 bg-light">
     <div class="container">
       <div class="row row-cols-3 g-3">
-        <?php
-        include "connessione.php";
-        $connessione = new mysqli($hostname, $username, $password, "ecommerce");
-        if ($connessione->connect_error) {
-          die("Connessione fallita: " . $connessione->connect_error);
-        }
+      <?php
+include "connessione.php";
+$connessione = new mysqli($hostname, $username, $password, "ecommerce");
+if ($connessione->connect_error) {
+    die("Connessione fallita: " . $connessione->connect_error);
+}
 
-        $sql = "SELECT prodotto.nome, prodotto.descrizione, prodotto.prezzo, categoria.nome AS nome_categoria FROM prodotto INNER JOIN categoria ON prodotto.ID_categoria = categoria.ID";
-        $result = $connessione->query($sql);
+// Assumendo che tu voglia visualizzare tutti i prodotti, rimuoveremo il WHERE clause.
+// Se vuoi filtrare per un ID specifico, dovrai ottenere quell'ID da qualche parte, ad esempio da $_GET o $_POST
+$sql = "SELECT prodotto.ID, prodotto.nome AS nome_prodotto, prodotto.descrizione, prodotto.prezzo, categoria.nome AS nome_categoria FROM prodotto INNER JOIN categoria ON prodotto.ID_categoria = categoria.ID";
 
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo '<div class="col">';
-                echo '<div class="card">';
-                // Qui potresti voler includere un'immagine per il prodotto, se ne hai una nel tuo database
-                echo '<div class="card-body">';
-                echo '<h5 class="card-title">'.$row["nome"].'</h5>';
-                echo '<p class="card-text">'.$row["descrizione"].'</p>';
-                echo '<p class="card-text"><small class="text-muted">Categoria: '.$row["nome_categoria"].'</small></p>';
-                echo '<div class="d-flex justify-content-between align-items-center">';
-                echo '<div class="btn-group">';
-                echo '<button type="button" class="btn btn-sm btn-outline-secondary">View</button>';
-                echo '</div>';
-                echo '<small class="text-muted">€ '.$row["prezzo"].'</small>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
-            }
-        } else {
-            echo "Nessun prodotto trovato.";
-        }
-        $connessione->close();
-        ?>
+// Utilizzo del metodo prepare() per preparare la query
+$stmt = $connessione->prepare($sql);
+
+// Se la tua intenzione era di filtrare per un ID specifico, qui andrebbe associato il valore dell'ID:
+// $stmt->bind_param("i", $id_prodotto); // Dove $id_prodotto contiene l'ID del prodotto che vuoi filtrare.
+
+// Esecuzione della query preparata
+$stmt->execute();
+
+// Ottenimento del risultato
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo '<div class="col">';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
+        echo '<h5 class="card-title">'.$row["nome_prodotto"].'</h5>';
+        echo '<p class="card-text">'.$row["descrizione"].'</p>';
+        echo '<p class="card-text"><small class="text-muted">Categoria: '.$row["nome_categoria"].'</small></p>';
+        echo '<div class="d-flex justify-content-between align-items-center">';
+        echo '<div class="btn-group">';
+        echo '<a href="dettaglio_prodotto.php?id='.$row["ID"].'" class="btn btn-sm btn-outline-secondary">View</a>';
+        echo '</div>';
+        echo '<small class="text-muted">€ '.$row["prezzo"].'</small>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
+} else {
+    echo "Nessun prodotto trovato.";
+}
+$connessione->close();
+?>
       </div>
     </div>
   </div>
