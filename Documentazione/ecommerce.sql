@@ -82,10 +82,10 @@ INSERT INTO categoria (nome, descrizione) VALUES
 -- Inserimento dati nella tabella prodotto
 -- Nota: Gli inserimenti per 'Divano angolare' e 'Letto matrimoniale' sono già presenti, quindi li ometto
 INSERT INTO prodotto (nome, descrizione, prezzo, ID_categoria, percorso_immagine) VALUES
-('Tavolino da caffè', 'Tavolino in legno massello con ripiano in vetro', 199.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/tavolino.jpg'),
+('Tavolino da caffè', 'Tavolino in legno massello con ripiano in vetro', 199.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/tavolino1.png'),
 ('Divano angolare', 'Divano angolare in tessuto grigio, 5 posti', 899.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/divano1.jpg'),
 ('Poltrona piegevole', 'Morbida poltrona reclinabile', 299.99, (SELECT ID FROM categoria WHERE nome='Terrazza'), 'immagini/poltrona.jpg'),
-('Lampada da terra', 'Lampada da terra moderna in metallo nero', 89.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/lampada.jpg'),
+('Lampada da terra', 'Lampada da terra moderna in metallo nero', 89.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/lampada1.jpg'),
 ('Armadio a due ante', 'Armadio spazioso in legno chiaro', 599.99, (SELECT ID FROM categoria WHERE nome='Camera'), 'immagini/armadio.jpg'),
 ('Comodino in legno', 'Comodino in legno con due cassetti', 129.99, (SELECT ID FROM categoria WHERE nome='Camera'), 'immagini/comodino.jpg'),
 ('Specchiera da ingresso', 'Specchiera con cornice in legno e mensola', 79.99, (SELECT ID FROM categoria WHERE nome='Ingresso'), 'immagini/specchiera.jpg'),

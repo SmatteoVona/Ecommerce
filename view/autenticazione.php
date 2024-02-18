@@ -28,7 +28,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 $_SESSION['user_id'] = $user['ID'];
                 
                 // Reindirizza alla pagina desiderata dopo il login
-                header("Location: lista_prodotti.php");
+                header("Location: index.php");
                 exit;
             } else {
                 // Gestisci il caso di password errata

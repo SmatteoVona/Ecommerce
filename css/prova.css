@@ -1,0 +1,93 @@
+/* Reset base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+/* Container principale */
+.main-container {
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Intestazione */
+.header {
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #333;
+}
+
+/* Descrizione del prodotto */
+.product-description {
+  margin-bottom: 20px;
+}
+
+.product-description img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.product-details {
+  margin-top: 20px;
+}
+
+.product-details h2,
+.product-details p {
+  margin: 10px 0;
+}
+
+/* Accessori */
+.accessories-section h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.form-check {
+  margin-bottom: 10px;
+}
+
+/* Bottoni */
+.btn {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #eaeaea;
+}
+
+.footer p {
+  margin: 0;
+  color: #666;
+}
