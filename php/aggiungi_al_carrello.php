@@ -46,7 +46,8 @@ if (isset($_SESSION['user_id']) && isset($_POST['id_prodotto'])) {
 
     echo "Prodotto e accessori aggiunti al carrello.";
 } else {
-    echo "Utente non autenticato o nessun prodotto specificato.";
+    header('Location: ../view/login.php');
+    exit();
 }
 
 $connessione->close();

@@ -16,7 +16,7 @@ if ($result->num_rows > 0) {
 } else {
     $sql = "INSERT INTO cliente (nome, cognome, mail, password) VALUES ('$nome', '$cognome', '$email', '$password')";
     if ($connessione->query($sql) === TRUE) {
-        header("Location: ../view/index.php");
+        header("Location: ../view/login.php");
         exit;
     } else {
         echo "Errore durante la registrazione: " . $connessione->error;
