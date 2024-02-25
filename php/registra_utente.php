@@ -1,5 +1,5 @@
 <?php
-include "../php/connessione.php";
+include "connessione.php";
 $connessione = new mysqli($hostname, $username, $password, "ecommerce");
 
 $nome = $connessione->real_escape_string($_POST['nome']);
@@ -16,7 +16,7 @@ if ($result->num_rows > 0) {
 } else {
     $sql = "INSERT INTO cliente (nome, cognome, mail, password) VALUES ('$nome', '$cognome', '$email', '$password')";
     if ($connessione->query($sql) === TRUE) {
-        header("Location: index.php");
+        header("Location: ../view/index.php");
         exit;
     } else {
         echo "Errore durante la registrazione: " . $connessione->error;

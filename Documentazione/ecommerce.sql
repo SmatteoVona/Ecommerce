@@ -32,10 +32,8 @@ FOREIGN KEY (ID_categoria) REFERENCES categoria(ID));
 
 CREATE TABLE if NOT EXISTS carrello(
 ID INT PRIMARY KEY AUTO_INCREMENT,
-ID_accessorio INT NOT NULL,
-ID_carrello INT,
-FOREIGN KEY (ID_cliente) REFERENCES cliente(ID),
-FOREIGN KEY (ID_carrello) REFERENCES accessorio(ID));
+ID_cliente INT NOT NULL,
+FOREIGN KEY (ID_cliente) REFERENCES cliente(ID));
 
 CREATE TABLE if NOT EXISTS ordine(
 ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -61,13 +59,14 @@ FOREIGN KEY (ID_prodotto) REFERENCES prodotto(ID),
 FOREIGN KEY (ID_accessorio) REFERENCES accessorio(ID));
 
 CREATE TABLE if NOT EXISTS dettaglio_ordine(
-ID INT PRIMARY KEY AUTO_INCREMENT,
-ID_carrello INT NOT NULL ,
-ID_prodotto INT NOT NULL ,
-ID_accessorio INT,
-FOREIGN KEY (ID_carrello) REFERENCES carrello(ID),
-FOREIGN KEY (ID_prodotto) REFERENCES prodotto(ID),
-FOREIGN KEY (ID_accessorio) REFERENCES accessorio(ID));
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  ID_ordine INT NOT NULL,
+  ID_prodotto INT NOT NULL,
+  ID_accessorio INT,
+  FOREIGN KEY (ID_ordine) REFERENCES ordine(ID),
+  FOREIGN KEY (ID_prodotto) REFERENCES prodotto(ID),
+  FOREIGN KEY (ID_accessorio) REFERENCES accessorio(ID)
+);
 
 
 INSERT INTO cliente (nome, cognome, mail, password) VALUES
