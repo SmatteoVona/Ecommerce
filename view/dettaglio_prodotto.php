@@ -1,18 +1,14 @@
 
 <!doctype html>
-<html lang="en" data-bs-theme="auto">
+<html lang="it" data-bs-theme="auto">
 
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.118.2">
-  <title>Product example · Bootstrap v5.3</title>
+  <title>Dettaglio prodotto</title>
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/product/">
 
-  <!-- Custom styles for this template -->
   <link href="../css/product.css" rel="stylesheet">
 
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -32,31 +28,20 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="index.php" class="nav-link px-2 text-white">Home</a></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-            aria-label="Search">
-        </form>
-
         <?php
-  // Avvia la sessione all'inizio del file PHP
   session_start();
 
-  // Controlla se l'utente è già autenticato
   if (isset($_SESSION['user_id'])) {
-      // Mostra il pulsante di logout
-      echo '<a href="logout.php" class="btn btn-outline-danger me-2">Logout</a>';
-  } else {
-      // Mostra i pulsanti di login e sign-up
-      echo '<a href="login.php" class="btn btn-outline-light me-2">Login</a>';
-      echo '<a href="registrazione.php" class="btn btn-warning">Sign-up</a>';
-  }
+    echo '<a href="logout.php" class="btn btn-outline-danger me-2">Logout</a>';
+    echo '<a href="checkout.php" class="btn btn-outline-light me-2">Carrello</a>';
+
+} else {
+  echo '<a href="login.php" class="btn btn-outline-light me-2">Login</a>';
+    echo '<a href="registrazione.php" class="btn btn-warning">Sign-up</a>';
+}
   ?>
 
 </div>
@@ -83,7 +68,7 @@
     <main>
       <div class="container py-5">
         <?php
-        include "connessione.php";
+        include "../php/connessione.php";
         $connessione = new mysqli($hostname, $username, $password, "ecommerce");
         if ($connessione->connect_error) {
           die("Connessione fallita: " . $connessione->connect_error);
@@ -99,21 +84,20 @@
 
           if ($row = $result->fetch_assoc()) {
             echo '<div class="text-center">';
-            echo '<img src="../' . $row["percorso_immagine"] . '" class="img-fluid" alt="Immagine Prodotto" style="max-width: 50%; height: auto;">';
             echo '<h1 class="display-4 fw-bold">' . $row["nome_prodotto"] . '</h1>';
             echo '<p class="lead">' . $row["descrizione"] . '</p>';
             echo '<p><strong>Categoria:</strong> ' . $row["nome_categoria"] . '</p>';
             echo '<p><strong>Prezzo:</strong> €' . $row["prezzo"] . '</p>';
+            echo '<img src="../' . $row["percorso_immagine"] . '" class="img-fluid" alt="Immagine Prodotto" style="max-width: 50%; height: auto;">';
+           
             echo '</div>';
           } else {
             echo "Prodotto non trovato.";
           }
 
-          // Form per aggiungere prodotto e accessori al carrello
-          echo '<form action="aggiungi_al_carrello.php" method="POST" class="text-center">';
+          echo '<form action="../php/aggiungi_al_carrello.php" method="POST" class="text-center">';
           echo '<h3>Seleziona accessori aggiuntivi:</h3>';
 
-          // Campo nascosto per passare l'ID del prodotto
           echo '<input type="hidden" name="id_prodotto" value="' . $id_prodotto . '">';
 
           $sqlAccessori = "SELECT ID, nome, prezzo FROM accessorio";
@@ -147,5 +131,4 @@
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>

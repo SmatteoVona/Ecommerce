@@ -51,36 +51,43 @@ FOREIGN KEY (ID_accessorio) REFERENCES accessorio(ID));
 
 CREATE TABLE if NOT EXISTS prodotti_carrello(
 ID INT PRIMARY KEY AUTO_INCREMENT,
-quantita INT DEFAULT 1,
 ID_carrello INT NOT NULL ,
 ID_prodotto INT NOT NULL ,
+ID_accessorio INT,
 FOREIGN KEY (ID_carrello) REFERENCES carrello(ID),
-FOREIGN KEY (ID_prodotto) REFERENCES prodotto(ID));
+FOREIGN KEY (ID_prodotto) REFERENCES prodotto(ID),
+FOREIGN KEY (ID_accessorio) REFERENCES accessorio(ID));
+
+CREATE TABLE if NOT EXISTS dettaglio_ordine(
+ID INT PRIMARY KEY AUTO_INCREMENT,
+ID_carrello INT NOT NULL ,
+ID_prodotto INT NOT NULL ,
+ID_accessorio INT,
+FOREIGN KEY (ID_carrello) REFERENCES carrello(ID),
+FOREIGN KEY (ID_prodotto) REFERENCES prodotto(ID),
+FOREIGN KEY (ID_accessorio) REFERENCES accessorio(ID));
 
 
--- Inserimento dati nella tabella cliente
 INSERT INTO cliente (nome, cognome, mail, password) VALUES
 ('Mario', 'Rossi', 'mario.rossi@example.com', 'password123'),
 ('Luca', 'Bianchi', 'luca.bianchi@example.com', 'password456'),
 ('Fabrizio', 'Verdi', 'fabrizio.verdi@example.com', 'abcde'),
 ('Chiara', 'Neri', 'chiara.neri@example.com', '12345');
 
--- Inserimento dati nella tabella accessorio
+
 INSERT INTO accessorio (nome, descrizione, prezzo) VALUES
 ('Cuscino decorativo', 'Cuscino in cotone con motivi geometrici', 25.99),
 ('Lampada da tavolo', 'Lampada in stile moderno, perfetta per il soggiorno', 49.99),
 ('Poggia bicchieri', 'Poggia bicchieri in plastica dura, per evitare di sporcare', 9.99);
 
--- Inserimento dati nella tabella categoria
--- Completamento inserimento dati per le categorie mancanti
+
 INSERT INTO categoria (nome, descrizione) VALUES
 ('Soggiorno', 'Mobili e accessori per il soggiorno'),
 ('Camera', 'Tutto il necessario per arredare la tua camera da letto'),
 ('Ingresso', 'Arredi e complementi per dare il benvenuto in casa tua'),
 ('Terrazza', 'Arredamento e decorazioni per esterni');
 
--- Inserimento dati nella tabella prodotto
--- Nota: Gli inserimenti per 'Divano angolare' e 'Letto matrimoniale' sono già presenti, quindi li ometto
+
 INSERT INTO prodotto (nome, descrizione, prezzo, ID_categoria, percorso_immagine) VALUES
 ('Tavolino da caffè', 'Tavolino in legno massello con ripiano in vetro', 199.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/tavolino1.png'),
 ('Divano angolare', 'Divano angolare in tessuto grigio, 5 posti', 899.99, (SELECT ID FROM categoria WHERE nome='Soggiorno'), 'immagini/divano1.jpg'),
@@ -95,33 +102,24 @@ INSERT INTO prodotto (nome, descrizione, prezzo, ID_categoria, percorso_immagine
 ('Ombrellone da giardino', 'Ombrellone grande resistente ai raggi UV', 99.99, (SELECT ID FROM categoria WHERE nome='Terrazza'), 'immagini/ombrellone.jpg');
 
 
--- Nota: Assicurati che i nomi delle categorie corrispondano esattamente a quelli inseriti nella tabella categoria.
-
-
--- Inserimento dati nella tabella carrello
--- Assumendo che i clienti abbiano già un carrello (questo dipende dalla logica dell'applicazione)
 INSERT INTO carrello (ID_cliente) VALUES
 ((SELECT ID FROM cliente WHERE mail='mario.rossi@example.com')),
 ((SELECT ID FROM cliente WHERE mail='luca.bianchi@example.com'));
 
--- Inserimento dati nella tabella ordine
--- Assumendo che ci siano ordini effettuati
+
 INSERT INTO ordine (indirizzo, stato, ID_carrello) VALUES
 ('Via Roma 1, Milano', 'Spedito', (SELECT ID FROM carrello WHERE ID_cliente=(SELECT ID FROM cliente WHERE mail='mario.rossi@example.com'))),
 ('Via Milano 2, Roma', 'In preparazione', (SELECT ID FROM carrello WHERE ID_cliente=(SELECT ID FROM cliente WHERE mail='luca.bianchi@example.com')));
 
--- Inserimento dati nella tabella lista_accessori
--- Collegamento tra prodotti e accessori
+
 INSERT INTO lista_accessori (ID_prodotto, ID_accessorio) VALUES
 ((SELECT ID FROM prodotto WHERE nome='Divano angolare'), (SELECT ID FROM accessorio WHERE nome='Cuscino decorativo')),
 ((SELECT ID FROM prodotto WHERE nome='Letto matrimoniale'), (SELECT ID FROM accessorio WHERE nome='Lampada da tavolo'));
 
--- Inserimento dati nella tabella prodotti_carrello
--- Assumendo che i clienti abbiano aggiunto prodotti al carrello
-INSERT INTO prodotti_carrello (quantita, ID_carrello, ID_prodotto) VALUES
-(1, (SELECT ID FROM carrello WHERE ID_cliente=(SELECT ID FROM cliente WHERE mail='mario.rossi@example.com')), (SELECT ID FROM prodotto WHERE nome='Divano angolare')),
-(2, (SELECT ID FROM carrello WHERE ID_cliente=(SELECT ID FROM cliente WHERE mail='luca.bianchi@example.com')), (SELECT ID FROM prodotto WHERE nome='Letto matrimoniale'));
 
+INSERT INTO prodotti_carrello (ID_carrello, ID_prodotto, ID_accessorio) VALUES
+((SELECT ID FROM carrello WHERE ID_cliente=(SELECT ID FROM cliente WHERE mail='mario.rossi@example.com')), (SELECT ID FROM prodotto WHERE nome='Divano angolare'),2),
+((SELECT ID FROM carrello WHERE ID_cliente=(SELECT ID FROM cliente WHERE mail='luca.bianchi@example.com')), (SELECT ID FROM prodotto WHERE nome='Letto matrimoniale'),NULL);
 
 
 

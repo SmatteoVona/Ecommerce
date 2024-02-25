@@ -13,7 +13,7 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
 <main class="form-signin w-100 m-auto">
-  <form action="registra_utente.php" method="POST">
+  <form action="../php/registra_utente.php" method="POST">
     <h1 class="h3 mb-3 fw-normal">Crea un nuovo account</h1>
 
     <div class="form-floating">
